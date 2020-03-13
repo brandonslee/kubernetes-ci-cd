@@ -10,6 +10,7 @@ node {
     appName = "hello-kenzan"
     registryHost = "192.168.108.53:5000/"
     imageName = "${registryHost}${appName}:${tag}"
+    latestImageName = "${registryHost}${appName}:latest"
     env.BUILDIMG=imageName
 
     stage "Build"
@@ -19,6 +20,10 @@ node {
     stage "Push"
 
         sh "docker push ${imageName}"
+
+	// Tag latest and push again.
+	sh "docker tag ${imageName} ${latestImageName}"
+	sh "docker push ${imageName}"
 
     stage "Deploy"
 

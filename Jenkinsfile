@@ -23,7 +23,11 @@ node {
 
 	// Tag latest and push again.
 	sh "docker tag ${imageName} ${latestImageName}"
-	sh "docker push ${imageName}"
+	sh "docker push ${latestImageName}"
+
+    stage "Delete"
+
+    	sh "kubectl delete -f applications/hello-kenzan/k8s/deployment.yaml"
 
     stage "Deploy"
 

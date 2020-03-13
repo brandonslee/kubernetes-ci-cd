@@ -84,13 +84,16 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
   labels:
     app: jenkins
 spec:
+  selector:
+    matchLabels:
+      app: jenkins
   strategy:
     type: Recreate
   template:
@@ -114,7 +117,7 @@ spec:
           mountPath: "/kubectl-config-context.sh"
           subPath: "kubectl-config-context.sh"
       containers:
-      - image: 127.0.0.1:30400/jenkins:latest
+      - image: 192.168.108.53:5000/jenkins:latest
         name: jenkins
         securityContext:
           privileged: true
